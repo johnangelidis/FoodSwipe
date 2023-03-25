@@ -1,14 +1,13 @@
 /* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import Recipe from '../models/Recipe';
-import getRecipes from '../services/RecipeService';
+import { getRecipes, filterRecipes } from '../services/RecipeService';
 
 function Recipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   useEffect(() => {
     getRecipes().then((res) => {
-      const filteredRecipes = res.data.children.filter((recipe: any, index: number) => index >= 2 || !recipe.data.title.startsWith('['));
+      const filteredRecipes = filterRecipes(res);
       const recipesFinal: Recipe[] = filteredRecipes?.map((recipe: any) => ({
         id: recipe.data.id,
         title: recipe.data.title,

@@ -5,4 +5,9 @@ const getRecipes = async () => {
   return res.data;
 };
 
-export default getRecipes;
+const filterRecipes = (recipesJSON: any) => recipesJSON.data.children.filter((recipe: any, index: number) => index >= 2 || !recipe.data.title.startsWith('['));
+
+export {
+  getRecipes,
+  filterRecipes,
+};
