@@ -1,4 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak */
 import React, { useState, useEffect } from 'react';
 import Recipe from '../models/Recipe';
 import { getRecipes, filterRecipes } from '../services/RecipeService';
