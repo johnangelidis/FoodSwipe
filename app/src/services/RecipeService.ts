@@ -5,6 +5,7 @@ const getRecipes = async () => {
   return res.data;
 };
 
+// Removes moderator posts that are not recipes
 const filterRecipes = (recipesJSON: any) => recipesJSON.data.children.filter((recipe: any, index: number) => index >= 2 || !recipe.data.title.startsWith('['));
 
 export {
