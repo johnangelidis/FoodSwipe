@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Recipe from '../models/Recipe';
 import RecipeCard from './RecipeCard';
 import {
-  getRecipes, filterRecipes, processRecipes, getPostComments, extractInstructions,
+  getRecipes, filterRecipes, parseRecipes,
 } from '../services/RecipeService';
 
 function Recipes() {
@@ -12,15 +12,8 @@ function Recipes() {
   useEffect(() => {
     getRecipes().then((res) => {
       const filteredRecipes = filterRecipes(res);
-      const recipesFinal: Recipe[] = processRecipes(filteredRecipes);
+      const recipesFinal: Recipe[] = parseRecipes(filteredRecipes);
       setRecipes(recipesFinal);
-
-      recipesFinal.forEach((recipe) => {
-        getPostComments(recipe.id).then((response) => {
-          const instructions: string = extractInstructions(response);
-          console.log(instructions);
-        });
-      });
     });
   }, []);
   return (
