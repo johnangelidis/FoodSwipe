@@ -1,6 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useState, useEffect } from 'react';
 import Recipe from '../models/Recipe';
+import RecipeCard from './RecipeCard';
 import { getRecipes, filterRecipes } from '../services/RecipeService';
 
 function Recipes() {
@@ -23,11 +24,13 @@ function Recipes() {
   return (
     <div>
       {!recipes.length ? 'Loading...' : recipes.map((recipe) => (
-        <div key={recipe.id}>
-          <p>{recipe.title}</p>
-          <img src={recipe.imageUrl} alt="recipe img" width={250} height={250} />
-        </div>
+        // <div key={recipe.id}>
+        //   <p>{recipe.title}</p>
+        //   <img src={recipe.imageUrl} alt="recipe img" width={250} height={250} />
+        // </div>
+        <RecipeCard {...recipe} />
       ))}
+
     </div>
   );
 }
