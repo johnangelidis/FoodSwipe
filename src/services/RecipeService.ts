@@ -22,12 +22,12 @@ const getPostComments = async (postId: string) => {
   return res.data;
 };
 
-const extractIngredients = (commentsJSON: any) => commentsJSON[1].data.children[0].data.body;
+const extractInstructions = (commentsJSON: any) => commentsJSON[1].data.children[0].data.body;
 
 export {
   getRecipes,
   filterRecipes,
   processRecipes,
   getPostComments,
-  extractIngredients,
+  extractInstructions,
 };

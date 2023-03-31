@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Recipe from '../models/Recipe';
 import RecipeCard from './RecipeCard';
 import {
-  getRecipes, filterRecipes, processRecipes, getPostComments, extractIngredients,
+  getRecipes, filterRecipes, processRecipes, getPostComments, extractInstructions,
 } from '../services/RecipeService';
 
 function Recipes() {
@@ -17,8 +17,8 @@ function Recipes() {
 
       recipesFinal.forEach((recipe) => {
         getPostComments(recipe.id).then((response) => {
-          const ingredients: string = extractIngredients(response);
-          console.log(ingredients);
+          const instructions: string = extractInstructions(response);
+          console.log(instructions);
         });
       });
     });
