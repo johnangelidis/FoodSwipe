@@ -1,3 +1,11 @@
+.recipesDiv {
+    margin:auto;
+}
+
+.recipeCard {
+    margin:auto;
+    max-width: 500px;
+}
 .recipeCardButtons {
     display: flex;
     justify-content: space-between;

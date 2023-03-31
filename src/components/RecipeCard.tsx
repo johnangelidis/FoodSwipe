@@ -11,16 +11,16 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Recipe from '../models/Recipe';
 
 function RecipeCard({
-  title, author, imageUrl, imageWidth, imageHeight,
+  title, author, imageUrl,
 } : Recipe) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className="recipeCard">
       <CardHeader
         title={title}
         subheader={`by ${author}`}
       />
       <CardMedia
-        sx={{ height: imageHeight, width: imageWidth }}
+        sx={{ height: 400, width: 600 }}
         image={imageUrl}
         title="img"
       />
