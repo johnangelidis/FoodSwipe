@@ -9,13 +9,21 @@ import {
 
 function Recipes() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+
   useEffect(() => {
     getRecipes().then((res) => {
-      const filteredRecipes = filterRecipes(res);
-      const recipesFinal: Recipe[] = parseRecipes(filteredRecipes);
-      setRecipes(recipesFinal);
+      const filtered = filterRecipes(res);
+      setFilteredRecipes(filtered);
     });
   }, []);
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const parsedRecipes = await parseRecipes(filteredRecipes);
+      setRecipes(parsedRecipes);
+    };
+    fetchRecipes();
+  }, [filteredRecipes]);
   return (
     <div className="recipesDiv">
       <Typography variant="h3">FoodSwipe</Typography>

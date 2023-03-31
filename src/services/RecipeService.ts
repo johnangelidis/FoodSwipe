@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 import axios from 'axios';
 import Recipe from '../models/Recipe';
@@ -14,21 +16,30 @@ const getPostComments = async (postId: string) => {
   return res.data;
 };
 
-const extractInstructions = (commentsJSON:any):string => commentsJSON[1].data.children[0].data.body;
+const extractInstructions = (commentsJSON:any, authorId:string):string => {
+  let recipeBody = '';
+  // eslint-disable-next-line consistent-return
+  commentsJSON.forEach((comment:any, index:number) => {
+    const commentsChildren = commentsJSON[1].data.children[index];
+    if (commentsChildren !== undefined) {
+      const commentAuthor = commentsJSON[1].data.children[index].data.author;
+      if (commentAuthor && commentAuthor === authorId) {
+        recipeBody = commentsJSON[1].data.children[index].data.body;
+      }
+    } else {
+      return '';
+    }
+  });
+  return recipeBody;
+};
 
-const parseRecipes = (filteredRecipes: any) : Recipe[] => {
+const parseRecipes = async (filteredRecipes: any) : Promise<Recipe[]> => {
   const recipes : Recipe[] = [];
   if (filteredRecipes) {
-    filteredRecipes.forEach((recipe:any) => {
-      let comments:string;
-      let extractedInstructions = '';
+    for (const recipe of filteredRecipes) {
       const commentsPromise : Promise<any> = getPostComments(recipe.data.id);
-      commentsPromise.then((res) => {
-        comments = res;
-        extractedInstructions = extractInstructions(comments);
-        console.log(extractedInstructions);
-      });
-
+      const comments = await commentsPromise;
+      const extractedInstructions = extractInstructions(comments, recipe.data.author);
       recipes.push({
         id: recipe.data.id,
         title: recipe.data.title,
@@ -36,14 +47,12 @@ const parseRecipes = (filteredRecipes: any) : Recipe[] => {
         imageUrl: recipe.data.url,
         instructions: extractedInstructions,
       });
-    });
+    }
   }
   return recipes;
 };
-
 export {
   getRecipes,
   filterRecipes,
-  // processRecipes,
   parseRecipes,
 };
