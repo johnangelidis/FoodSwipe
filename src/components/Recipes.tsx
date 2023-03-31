@@ -28,7 +28,7 @@ function Recipes() {
     <div className="recipesDiv">
       <Typography variant="h3">FoodSwipe</Typography>
       {!recipes.length ? 'Loading...' : recipes.map((recipe) => (
-        <RecipeCard {...recipe} />
+        <RecipeCard {...recipe} key={recipe.id} />
       ))}
 
     </div>
