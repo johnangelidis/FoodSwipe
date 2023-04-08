@@ -3,6 +3,7 @@
 /* eslint-disable max-len */
 import axios from 'axios';
 import Recipe from '../models/Recipe';
+import RecipeInstructions from '../models/RecipeInstructions';
 
 const getRecipes = async () => {
   const res = await axios.get('https://www.reddit.com/r/recipes/hot.json?limit=10');
@@ -33,6 +34,25 @@ const extractInstructions = (commentsJSON:any, authorId:string):string => {
   return recipeBody;
 };
 
+const formatRecipeInstructions = (extractedInstructions: string): RecipeInstructions => {
+  // match one or more newline
+  //  or carriage return characters followed by an optional numbering pattern (digits and a dot)
+  //  or bullet point pattern (one or more * or • characters followed by one or more whitespace characters).
+  const splitRegex = /[\n\r]+(?:\d+\.|[*•]\s+)?/g;
+
+  const recipeParts = extractedInstructions.split(splitRegex).map((part:any) => part.trim());
+
+  const ingredientsIndex = recipeParts.findIndex((part:any) => part.toLowerCase().includes('ingredients'));
+  const directionsIndex = recipeParts.findIndex((part:any) => part.toLowerCase().includes('directions')
+  || part.toLowerCase().includes('instructions')
+  || part.toLowerCase().includes('how to')
+  || part.toLowerCase().includes('prep'));
+
+  const ingredients = recipeParts.slice(ingredientsIndex + 1, directionsIndex).filter((part:any) => !!part);
+  const directions = recipeParts.slice(directionsIndex + 1).filter((part:any) => !!part);
+  return { ingredients, directions };
+};
+
 const parseRecipes = async (filteredRecipes: any) : Promise<Recipe[]> => {
   const recipes : Recipe[] = [];
   if (filteredRecipes) {
@@ -40,12 +60,14 @@ const parseRecipes = async (filteredRecipes: any) : Promise<Recipe[]> => {
       const commentsPromise : Promise<any> = getPostComments(recipe.data.id);
       const comments = await commentsPromise;
       const extractedInstructions = extractInstructions(comments, recipe.data.author);
+      const formattedInstructions = formatRecipeInstructions(extractedInstructions);
       recipes.push({
         id: recipe.data.id,
         title: recipe.data.title,
         author: recipe.data.author,
         imageUrl: recipe.data.url,
-        instructions: extractedInstructions,
+        ingredients: formattedInstructions.ingredients,
+        directions: formattedInstructions.directions,
       });
     }
   }

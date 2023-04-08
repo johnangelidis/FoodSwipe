@@ -11,7 +11,10 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Recipe from '../models/Recipe';
@@ -32,7 +35,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 function RecipeCard({
-  title, author, imageUrl, instructions,
+  title, author, imageUrl, ingredients, directions,
 } : Recipe) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const handleExpandClick = () => {
@@ -68,7 +71,21 @@ function RecipeCard({
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="body1">{instructions}</Typography>
+            <Typography variant="h6">Ingredients</Typography>
+            <List>
+              {ingredients.map((ingredient) => (
+                <ListItem disablePadding>
+                  <ListItemText primary={ingredient} />
+                </ListItem>
+              ))}
+              <Divider />
+              <Typography variant="h6">Directions</Typography>
+              {directions.map((step) => (
+                <ListItem disablePadding>
+                  <ListItemText primary={step} />
+                </ListItem>
+              ))}
+            </List>
           </CardContent>
         </Collapse>
       </CardContent>

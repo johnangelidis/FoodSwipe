@@ -3,5 +3,6 @@ export default interface Recipe {
     title: string,
     author: string,
     imageUrl: string,
-    instructions: string | null | undefined,
-};
+    ingredients: string[],
+    directions: string[],
+}
