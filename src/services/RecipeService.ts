@@ -35,12 +35,18 @@ const extractInstructions = (commentsJSON:any, authorId:string):string => {
 };
 
 const formatRecipeInstructions = (extractedInstructions: string): RecipeInstructions => {
-  const splitRegex = /[*•]{1,2}|\n\d+\. /g; // matches one or two * or • or a new line followed by digits and a dot
+  // match one or more newline
+  //  or carriage return characters followed by an optional numbering pattern (digits and a dot)
+  //  or bullet point pattern (one or more * or • characters followed by one or more whitespace characters).
+  const splitRegex = /[\n\r]+(?:\d+\.|[*•]\s+)?/g;
 
   const recipeParts = extractedInstructions.split(splitRegex).map((part:any) => part.trim());
 
   const ingredientsIndex = recipeParts.findIndex((part:any) => part.toLowerCase().includes('ingredients'));
-  const directionsIndex = recipeParts.findIndex((part:any) => part.toLowerCase().includes('directions') || part.toLowerCase().includes('instructions'));
+  const directionsIndex = recipeParts.findIndex((part:any) => part.toLowerCase().includes('directions')
+  || part.toLowerCase().includes('instructions')
+  || part.toLowerCase().includes('how to')
+  || part.toLowerCase().includes('prep'));
 
   const ingredients = recipeParts.slice(ingredientsIndex + 1, directionsIndex).filter((part:any) => !!part);
   const directions = recipeParts.slice(directionsIndex + 1).filter((part:any) => !!part);
