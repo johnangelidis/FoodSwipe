@@ -1,11 +1,20 @@
+body {
+    overflow-x: hidden;
+}
+
 .recipesDiv {
     margin:auto;
 }
 
 .recipeCard {
-    margin:auto;
+    margin-left:auto;
+    margin-right: auto;
+    left:0;
+    right:0;
     max-width: 500px;
+    position:absolute;
 }
+
 .recipeCardButtons {
     display: flex;
     justify-content: space-between;

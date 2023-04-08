@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
+import TinderCard from 'react-tinder-card';
 import Recipe from '../models/Recipe';
 import RecipeCard from './RecipeCard';
 import {
@@ -24,11 +26,20 @@ function Recipes() {
     };
     fetchRecipes();
   }, [filteredRecipes]);
+  const onSwipe = (direction: any) => {
+    console.log(`You swiped: ${direction}`);
+  };
+
+  const onCardLeftScreen = (myIdentifier: any) => {
+    console.log(`${myIdentifier} left the screen`);
+  };
   return (
     <div className="recipesDiv">
       <Typography variant="h3">FoodSwipe</Typography>
       {!recipes.length ? 'Loading...' : recipes.map((recipe) => (
-        <RecipeCard {...recipe} key={recipe.id} />
+        <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['up', 'down']}>
+          <RecipeCard {...recipe} key={recipe.id} />
+        </TinderCard>
       ))}
 
     </div>
