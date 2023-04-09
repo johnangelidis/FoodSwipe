@@ -1,5 +1,10 @@
 body {
-    overflow-x: hidden;
+    overflow: hidden;
+}
+
+.navItem {
+    text-decoration: none;
+    color: white;
 }
 
 .recipesDiv {
