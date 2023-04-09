@@ -9,10 +9,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button/Button';
 import RecipeInstructions from '../models/RecipeInstructions';
 
-function Overlay({ ingredients, directions } : RecipeInstructions) {
+type OverlayProps = RecipeInstructions & {
+  showRecipe: boolean;
+  setShowRecipe: React.Dispatch<React.SetStateAction<boolean>>;
+};
+function Overlay({
+  ingredients, directions, showRecipe, setShowRecipe,
+} : OverlayProps) {
+  const handleOverlay = () => {
+    setShowRecipe(!showRecipe);
+  };
   return (
     <div className="overlay-bg">
-      <Button variant="contained">Back</Button>
+      <Button variant="contained" onClick={handleOverlay}>Back</Button>
       <Card className="overlay-card">
         <CardContent>
           <Typography variant="h6">Ingredients</Typography>

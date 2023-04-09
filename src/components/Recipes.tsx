@@ -35,7 +35,7 @@ function Recipes() {
   };
   return (
     <div className="recipesDiv">
-      <Typography variant="h3">FoodSwipe</Typography>
+      {/* <Typography variant="h3">FoodSwipe</Typography> */}
       {!recipes.length ? 'Loading...' : recipes.map((recipe) => (
         <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['up', 'down']}>
           <RecipeCard {...recipe} key={recipe.id} />

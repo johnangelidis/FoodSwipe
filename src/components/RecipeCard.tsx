@@ -19,25 +19,30 @@ function RecipeCard({
   };
 
   return (
-    <div>
-      {showRecipe ? <Overlay ingredients={ingredients} directions={directions} />
-        : (
-          <Card className="recipeCard">
-            <CardHeader
-              title={title}
-              subheader={`by ${author}`}
-            />
-            <CardMedia
-              sx={{ height: 400, width: 600 }}
-              image={imageUrl}
-              title="img"
-            />
-            <CardContent className="recipeCardButtons">
-              <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
-            </CardContent>
-          </Card>
-        )}
-
+    <div className="recipeCardContainer">
+      <Card className="recipeCard">
+        <CardHeader
+          title={title}
+          subheader={`by ${author}`}
+        />
+        <CardMedia
+          sx={{ height: 400, width: 600 }}
+          image={imageUrl}
+          title="img"
+        />
+        <CardContent className="recipeCardButtons">
+          <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
+        </CardContent>
+      </Card>
+      {showRecipe
+      && (
+      <Overlay
+        ingredients={ingredients}
+        directions={directions}
+        showRecipe={showRecipe}
+        setShowRecipe={setShowRecipe}
+      />
+      )}
     </div>
   );
 }
