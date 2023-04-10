@@ -1,12 +1,21 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button/Button';
 import Card from '@mui/material/Card/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent/CardContent';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import User from '../models/User';
+import { register } from '../state/auth/authSlice';
 
 function Register() {
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    user, isLoading, isError, isSuccess, message,
+  } = useSelector((state:any) => state.auth);
   const [formData, setFormData] = useState<User>({
     name: '',
     email: '',
@@ -27,6 +36,14 @@ function Register() {
 
   const onSubmit = (e:any) => {
     e.preventDefault();
+    const userData = {
+      name,
+      email,
+      password,
+      passwordConfirmation,
+    };
+
+    // dispatch(register(userData));
   };
   return (
     <form onSubmit={onSubmit}>
