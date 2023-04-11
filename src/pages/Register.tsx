@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import Button from '@mui/material/Button/Button';
 import Card from '@mui/material/Card/Card';
@@ -8,14 +8,27 @@ import CardContent from '@mui/material/CardContent/CardContent';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import User from '../models/User';
-import { register } from '../state/auth/authSlice';
+import { register, reset } from '../state/auth/authSlice';
+import { AppDispatch } from '../app/store';
 
 function Register() {
-  // const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     user, isLoading, isError, isSuccess, message,
   } = useSelector((state:any) => state.auth);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (isSuccess || user) {
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
   const [formData, setFormData] = useState<User>({
     name: '',
     email: '',
@@ -43,8 +56,11 @@ function Register() {
       passwordConfirmation,
     };
 
-    // dispatch(register(userData));
+    dispatch(register(userData));
   };
+  // if(isLoading) {
+  //   return <Spinner />
+  // }
   return (
     <form onSubmit={onSubmit}>
       <Card className="formContainer">

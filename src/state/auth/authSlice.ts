@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/no-extraneous-dependencies */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser } from '../../services/AuthService';
+import { loginUser, logoutUser, registerUser } from '../../services/AuthService';
 import User from '../../models/User';
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user') as string);
@@ -23,6 +23,21 @@ export const register = createAsyncThunk('auth/register', async (userData: User,
     || error.toString();
     return thunkAPI.rejectWithValue(message);
   }
+});
+
+export const login = createAsyncThunk('auth/login', async (userData: any, thunkAPI) => {
+  try {
+    return await loginUser(userData);
+  } catch (error:any) {
+    const message = (error.response && error.response.data && error.response.data.message)
+    || error.message
+    || error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await logoutUser();
 });
 
 const authSlice = createSlice({
@@ -50,6 +65,23 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         // state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+        // state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.user = null;
       });
   },

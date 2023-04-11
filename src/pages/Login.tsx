@@ -1,9 +1,31 @@
 import {
   Button, Card, CardContent, TextField, Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../app/store';
+import { login, reset } from '../state/auth/authSlice';
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    user, isLoading, isError, isSuccess, message,
+  } = useSelector((state:any) => state.auth);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (isSuccess || user) {
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,6 +42,13 @@ function Login() {
 
   const onSubmit = (e:any) => {
     e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userData));
   };
   return (
     <form onSubmit={onSubmit}>

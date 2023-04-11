@@ -12,11 +12,20 @@ const registerUser = async (user: User) => {
   return response.data;
 };
 
-const loginUser = async () => {
-  await axios.post(LOGIN_API);
+const loginUser = async (userData: any) => {
+  const response = await axios.post(LOGIN_API, userData);
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data));
+  }
+  return response.data;
+};
+
+const logoutUser = () => {
+  localStorage.removeItem('user');
 };
 
 export {
   registerUser,
   loginUser,
+  logoutUser,
 };
