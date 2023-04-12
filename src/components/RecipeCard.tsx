@@ -7,13 +7,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
+import TinderCard from 'react-tinder-card';
 import Recipe from '../models/Recipe';
 import Overlay from './Overlay';
 import { setIsSwipeable } from '../state/swipe/swipeSlice';
 import { AppDispatch } from '../app/store';
 
 function RecipeCard({
-  title, author, imageUrl, ingredients, directions,
+  id, title, author, imageUrl, ingredients, directions,
 } : Recipe) {
   const dispatch = useDispatch<AppDispatch>();
   const isSwipeable = useSelector((state:any) => state.swipe.isSwipeable);
@@ -23,22 +24,34 @@ function RecipeCard({
     setShowRecipe(!showRecipe);
     dispatch(setIsSwipeable(!isSwipeable));
   };
+  const onSwipe = (direction: any) => {
+    console.log(`You swiped: ${direction}`);
+  };
+
+  const onCardLeftScreen = (myIdentifier: any) => {
+    console.log(`${myIdentifier} left the screen`);
+  };
   return (
     <div className="recipeCardContainer">
-      <Card className="recipeCard">
-        <CardHeader
-          title={title}
-          subheader={`by ${author}`}
-        />
-        <CardMedia
-          sx={{ height: 400, width: 600 }}
-          image={imageUrl}
-          title="img"
-        />
-        <CardContent className="recipeCardButtons">
-          <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
-        </CardContent>
-      </Card>
+      <TinderCard
+        onSwipe={onSwipe}
+        onCardLeftScreen={() => onCardLeftScreen(id)}
+      >
+        <Card className="recipeCard">
+          <CardHeader
+            title={title}
+            subheader={`by ${author}`}
+          />
+          <CardMedia
+            sx={{ height: 400, width: 600 }}
+            image={imageUrl}
+            title="img"
+          />
+          <CardContent className="recipeCardButtons">
+            <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
+          </CardContent>
+        </Card>
+      </TinderCard>
       {showRecipe
       && (
       <Overlay
