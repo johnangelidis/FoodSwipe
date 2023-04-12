@@ -2,6 +2,11 @@ body {
     overflow: hidden;
 }
 
+.navItem {
+    text-decoration: none;
+    color: white;
+}
+
 .recipesDiv {
     margin:auto;
 }
@@ -43,4 +48,30 @@ body {
     overflow: auto;
     height:500px;
     width: 600px;
+}
+
+.overlay-scrollable {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+
+.formContainer {
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.formContent {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.formItem {
+    margin:5px;
 }
