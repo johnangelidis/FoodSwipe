@@ -11,7 +11,7 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const {
-    user, isLoading, isError, isSuccess, message,
+    user, isError, isSuccess, message,
   } = useSelector((state:any) => state.auth);
 
   useEffect(() => {
