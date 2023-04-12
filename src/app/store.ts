@@ -1,10 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../state/auth/authSlice';
+import swipeReducer from '../state/swipe/swipeSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    swipe: swipeReducer,
   },
 });
 

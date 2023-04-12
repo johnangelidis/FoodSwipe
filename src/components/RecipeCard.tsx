@@ -3,93 +3,65 @@
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import Collapse from '@mui/material/Collapse';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import TinderCard from 'react-tinder-card';
 import Recipe from '../models/Recipe';
-
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import Overlay from './Overlay';
+import { setIsSwipeable } from '../state/swipe/swipeSlice';
+import { AppDispatch } from '../app/store';
 
 function RecipeCard({
-  title, author, imageUrl, ingredients, directions,
+  id, title, author, imageUrl, ingredients, directions,
 } : Recipe) {
-  const [expanded, setExpanded] = useState<boolean>(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const dispatch = useDispatch<AppDispatch>();
+  const isSwipeable = useSelector((state:any) => state.swipe.isSwipeable);
+  const [showRecipe, setShowRecipe] = useState<boolean>(false);
+
+  const toggleShowRecipe = () => {
+    setShowRecipe(!showRecipe);
+    dispatch(setIsSwipeable(!isSwipeable));
+  };
+  const onSwipe = (direction: any) => {
+    console.log(`You swiped: ${direction}`);
+  };
+
+  const onCardLeftScreen = (myIdentifier: any) => {
+    console.log(`${myIdentifier} left the screen`);
   };
   return (
-    <Card className="recipeCard">
-      <CardHeader
-        title={title}
-        subheader={`by ${author}`}
-      />
-      <CardMedia
-        sx={{ height: 400, width: 600 }}
-        image={imageUrl}
-        title="img"
-      />
-      <CardContent>
-        <CardActions className="recipeCardButtons">
-          <IconButton aria-label="dislike" color="error">
-            <ThumbDownIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-          <IconButton aria-label="like" color="success">
-            <ThumbUpIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant="h6">Ingredients</Typography>
-            <List>
-              {ingredients.map((ingredient) => (
-                <ListItem disablePadding>
-                  <ListItemText primary={ingredient} />
-                </ListItem>
-              ))}
-              <Divider />
-              <Typography variant="h6">Directions</Typography>
-              {directions.map((step) => (
-                <ListItem disablePadding>
-                  <ListItemText primary={step} />
-                </ListItem>
-              ))}
-            </List>
+    <div className="recipeCardContainer">
+      <TinderCard
+        onSwipe={onSwipe}
+        onCardLeftScreen={() => onCardLeftScreen(id)}
+      >
+        <Card className="recipeCard">
+          <CardHeader
+            title={title}
+            subheader={`by ${author}`}
+          />
+          <CardMedia
+            sx={{ height: 400, width: 600 }}
+            image={imageUrl}
+            title="img"
+          />
+          <CardContent className="recipeCardButtons">
+            <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
           </CardContent>
-        </Collapse>
-      </CardContent>
-    </Card>
+        </Card>
+      </TinderCard>
+      {showRecipe
+      && (
+      <Overlay
+        ingredients={ingredients}
+        directions={directions}
+        showRecipe={showRecipe}
+        setShowRecipe={setShowRecipe}
+      />
+      )}
+    </div>
   );
 }
 

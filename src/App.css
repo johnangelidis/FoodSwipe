@@ -11,6 +11,10 @@ body {
     margin:auto;
 }
 
+.recipeCardContainer {
+    position: relative;
+}
+
 .recipeCard {
     margin-left:auto;
     margin-right: auto;
@@ -18,11 +22,44 @@ body {
     right:0;
     max-width: 500px;
     position:absolute;
+    height: 600px;
 }
 
 .recipeCardButtons {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.overlay-bg {
+    background-color: rgb(0,0,0,0.5);
+    width:100%;    
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height:1000px;
+}
+
+.overlay-card {
+    margin-left:auto;
+    margin-right: auto;
+    left:0;
+    right:0;
+    overflow: auto;
+    height:500px;
+    width: 600px;
+    pointer-events:all;
+    position:fixed;
+}
+
+.overlay-scrollable {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+.no-drag {
+    pointer-events:none;
 }
 
 .formContainer {
