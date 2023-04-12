@@ -22,6 +22,7 @@ body {
     right:0;
     max-width: 500px;
     position:absolute;
+    height: 600px;
 }
 
 .recipeCardButtons {
@@ -48,6 +49,8 @@ body {
     overflow: auto;
     height:500px;
     width: 600px;
+    pointer-events:all;
+    position:fixed;
 }
 
 .overlay-scrollable {
@@ -55,6 +58,9 @@ body {
     overflow-y: scroll;
 }
 
+.no-drag {
+    pointer-events:none;
+}
 
 .formContainer {
     width: 30%;

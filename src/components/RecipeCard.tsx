@@ -6,18 +6,23 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button/Button';
+import { useSelector, useDispatch } from 'react-redux';
 import Recipe from '../models/Recipe';
 import Overlay from './Overlay';
+import { setIsSwipeable } from '../state/swipe/swipeSlice';
+import { AppDispatch } from '../app/store';
 
 function RecipeCard({
   title, author, imageUrl, ingredients, directions,
 } : Recipe) {
+  const dispatch = useDispatch<AppDispatch>();
+  const isSwipeable = useSelector((state:any) => state.swipe.isSwipeable);
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
 
   const toggleShowRecipe = () => {
     setShowRecipe(!showRecipe);
+    dispatch(setIsSwipeable(!isSwipeable));
   };
-
   return (
     <div className="recipeCardContainer">
       <Card className="recipeCard">
