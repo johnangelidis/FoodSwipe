@@ -34,10 +34,11 @@ function Register() {
     email: '',
     password: '',
     passwordConfirmation: '',
+    savedRecipes: [],
   });
 
   const {
-    name, email, password, passwordConfirmation,
+    name, email, password, passwordConfirmation, savedRecipes,
   } = formData;
 
   const onChange = (e:any) => {
@@ -54,6 +55,7 @@ function Register() {
       email,
       password,
       passwordConfirmation,
+      savedRecipes,
     };
 
     dispatch(register(userData));

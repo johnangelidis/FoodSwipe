@@ -13,7 +13,6 @@ function Home() {
       navigate('/login');
     }
   }, [user, navigate]);
-  console.log(user);
   return (
     <Recipes />
   );
