@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../state/auth/authSlice';
 import swipeReducer from '../state/swipe/swipeSlice';
+import recipeReducer from '../state/recipe/recipeSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     swipe: swipeReducer,
+    recipe: recipeReducer,
   },
 });
 
