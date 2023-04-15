@@ -7,11 +7,11 @@ import { getRecipes } from '../state/recipe/recipeSlice';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
-  const user = useSelector((state:RootState) => state.auth).user.result;
+  const user = useSelector((state:RootState) => state.auth).user.message;
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    console.log(user._id);
+    console.log(user);
     const data = {
       userId: user._id,
     };
