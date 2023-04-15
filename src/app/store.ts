@@ -10,6 +10,16 @@ const store = configureStore({
     swipe: swipeReducer,
     recipe: recipeReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+      // Ignore these action types
+      // ignoredActions: ['your/action/type'],
+      // Ignore these field paths in all actions
+      ignoredActionPaths: ['payload.headers', 'payload.config.transformRequest.0', 'payload.config.transformResponse.0', 'payload.config.env.FormData', 'payload.config.env.Blob', 'payload.config.validateStatus', 'payload.config.headers', 'payload.request'],
+      // Ignore these paths in the state
+      // ignoredPaths: ['items.dates'],
+    },
+  }),
 });
 
 export default store;

@@ -19,20 +19,18 @@ const initialState: RecipeState = {
   message: '',
 };
 
-export const getRecipes = createAsyncThunk('recipe/getRecipes', async (data, thunkAPI) => {
+export const getRecipes = createAsyncThunk('recipe/getRecipes', async (data: any, thunkAPI) => {
   try {
     return await getUserRecipes(data);
   } catch (error:any) {
-    const message = (error.response
-          && error.response.data
-          && error.response.data.message)
-        || error.message
-        || error.toString();
+    const message = (error.response && error.response.data && error.response.data.message)
+      || error.message
+      || error.toString();
     return thunkAPI.rejectWithValue(message);
   }
 });
 
-export const addRecipe = createAsyncThunk('recipe/addRecipe', async (data, thunkAPI) => {
+export const addRecipe = createAsyncThunk('recipe/addRecipe', async (data: any, thunkAPI) => {
   try {
     return await saveRecipe(data);
   } catch (error: any) {
@@ -45,7 +43,7 @@ export const addRecipe = createAsyncThunk('recipe/addRecipe', async (data, thunk
   }
 });
 
-export const deleteRecipe = createAsyncThunk('recipe/deleteRecipe', async (data, thunkAPI) => {
+export const deleteRecipe = createAsyncThunk('recipe/deleteRecipe', async (data: any, thunkAPI) => {
   try {
     return await removeRecipe(data);
   } catch (error: any) {
