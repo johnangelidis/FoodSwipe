@@ -19,7 +19,7 @@ const initialState: RecipeState = {
   message: '',
 };
 
-export const getRecipes = createAsyncThunk('recipe/getRecipes', async (data: any, thunkAPI) => {
+export const getMyRecipes = createAsyncThunk('recipe/getMyRecipes', async (data: any, thunkAPI) => {
   try {
     return await getUserRecipes(data);
   } catch (error:any) {
@@ -69,15 +69,15 @@ export const recipeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getRecipes.pending, (state) => {
+      .addCase(getMyRecipes.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getRecipes.fulfilled, (state, action) => {
+      .addCase(getMyRecipes.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.recipes = action.payload.data;
       })
-      .addCase(getRecipes.rejected, (state) => {
+      .addCase(getMyRecipes.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       })

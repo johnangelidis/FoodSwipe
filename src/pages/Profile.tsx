@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
 import { AppDispatch, RootState } from '../app/store';
-import { getRecipes } from '../state/recipe/recipeSlice';
+import { getMyRecipes } from '../state/recipe/recipeSlice';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
@@ -15,7 +15,7 @@ function Profile() {
     const data = {
       userId: user._id,
     };
-    dispatch(getRecipes(data));
+    dispatch(getMyRecipes(data));
   }, []);
   return (
     <>

@@ -1,18 +1,29 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Recipe from '../models/Recipe';
 import RecipeCard from './RecipeCard';
 import {
   getRecipes, filterRecipes, parseRecipes,
 } from '../services/RecipeService';
+import { AppDispatch, RootState } from '../app/store';
+import { getMyRecipes } from '../state/recipe/recipeSlice';
 
 function Recipes() {
+  const myRecipes = useSelector((state:RootState) => state.recipe).recipes;
+  const user = useSelector((state:RootState) => state.auth).user.message;
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    const data = {
+      userId: user._id,
+    };
+    dispatch(getMyRecipes(data));
     getRecipes().then((res) => {
       const filtered = filterRecipes(res);
       setFilteredRecipes(filtered);
@@ -21,7 +32,9 @@ function Recipes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       const parsedRecipes = await parseRecipes(filteredRecipes);
-      setRecipes(parsedRecipes);
+      const res = parsedRecipes.filter((recipe) =>
+        !myRecipes.some((myRecipe) => myRecipe.id === recipe.id));
+      setRecipes([...myRecipes, ...res]);
     };
     fetchRecipes();
   }, [filteredRecipes]);
