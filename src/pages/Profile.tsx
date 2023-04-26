@@ -15,7 +15,6 @@ function Profile() {
     const data = {
       userId: user._id,
     };
-
     dispatch(getRecipes(data));
   }, []);
   return (
@@ -31,7 +30,9 @@ function Profile() {
       <div>
         {recipes.length === 0
           ? <Typography variant="h6">You have no recipes saved</Typography>
-          : <>Hello</>}
+          : recipes.map((recipe) => (
+            <p>{recipe.title}</p>
+          ))}
       </div>
 
     </>
