@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
@@ -11,21 +12,37 @@ import TinderCard from 'react-tinder-card';
 import Recipe from '../models/Recipe';
 import Overlay from './Overlay';
 import { setIsSwipeable } from '../state/swipe/swipeSlice';
-import { AppDispatch } from '../app/store';
+import { AppDispatch, RootState } from '../app/store';
+import { addRecipe } from '../state/recipe/recipeSlice';
 
 function RecipeCard({
   id, title, author, imageUrl, ingredients, directions,
 } : Recipe) {
   const dispatch = useDispatch<AppDispatch>();
-  const isSwipeable = useSelector((state:any) => state.swipe.isSwipeable);
+  const isSwipeable = useSelector((state:RootState) => state.swipe.isSwipeable);
+  const user = useSelector((state: RootState) => state.auth).user.message;
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
-
   const toggleShowRecipe = () => {
     setShowRecipe(!showRecipe);
     dispatch(setIsSwipeable(!isSwipeable));
   };
+  // console.log(user._id);
   const onSwipe = (direction: any) => {
-    console.log(`You swiped: ${direction}`);
+    if (direction === 'right') {
+      const recipe: Recipe = {
+        id,
+        title,
+        author,
+        imageUrl,
+        ingredients,
+        directions,
+      };
+      const data = {
+        userId: user._id,
+        recipe,
+      };
+      dispatch(addRecipe(data));
+    }
   };
 
   const onCardLeftScreen = (myIdentifier: any) => {
@@ -36,6 +53,7 @@ function RecipeCard({
       <TinderCard
         onSwipe={onSwipe}
         onCardLeftScreen={() => onCardLeftScreen(id)}
+        preventSwipe={['up', 'down']}
       >
         <Card className="recipeCard">
           <CardHeader
