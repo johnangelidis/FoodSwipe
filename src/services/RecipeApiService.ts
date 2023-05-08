@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { REACT_APP_GET_RECIPES_API, REACT_APP_REMOVE_RECIPE_API, REACT_APP_SAVE_RECIPE_API } from '../configVariables';
+
+const REACT_APP_GET_RECIPES_API = process.env.REACT_APP_GET_RECIPES_API || '';
+const REACT_APP_SAVE_RECIPE_API = process.env.REACT_APP_SAVE_RECIPE_API || '';
+const REACT_APP_REMOVE_RECIPE_API = process.env.REACT_APP_REMOVE_RECIPE_API || '';
 
 const getUserRecipes = async (data: any) => {
   const response = await axios.get(REACT_APP_GET_RECIPES_API, {

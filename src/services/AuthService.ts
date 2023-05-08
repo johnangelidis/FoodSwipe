@@ -1,7 +1,8 @@
 import axios from 'axios';
 import User from '../models/User';
-import { REACT_APP_LOGIN_API, REACT_APP_REGISTER_API } from '../configVariables';
 
+const REACT_APP_REGISTER_API = process.env.REACT_APP_REGISTER_API || '';
+const REACT_APP_LOGIN_API = process.env.REACT_APP_LOGIN_API || '';
 const registerUser = async (user: User) => {
   const response = await axios.post(REACT_APP_REGISTER_API, user);
   if (response.data) {
