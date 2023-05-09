@@ -1,15 +1,23 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
 import { AppDispatch, RootState } from '../app/store';
 import { getMyRecipes } from '../state/recipe/recipeSlice';
+import SavedRecipeCard from '../components/SavedRecipeCard';
+import Overlay from '../components/Overlay';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
   const user = useSelector((state:RootState) => state.auth).user.message;
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const [showRecipe, setShowRecipe] = useState<boolean>(false);
+
+  const toggleShowRecipe = () => {
+    setShowRecipe(!showRecipe);
+  };
   useEffect(() => {
     console.log(user);
     const data = {
@@ -21,17 +29,50 @@ function Profile() {
     <>
       <div>
         <Typography variant="h3">
-          Hello,
-          {' '}
           {user.name}
+          &apos;s recipes
         </Typography>
 
       </div>
-      <div>
+      {/* {
+        !showRecipe ? (
+          <div className="profileRecipes">
+            {recipes.length === 0
+              ? <Typography variant="h6">You have no recipes saved</Typography>
+              : recipes.map((recipe) => (
+                <SavedRecipeCard
+                  id={recipe.id}
+                  title={recipe.title}
+                  author={recipe.author}
+                  imageUrl={recipe.imageUrl}
+                  ingredients={recipe.ingredients}
+                  directions={recipe.directions}
+                  onUpdate={toggleShowRecipe}
+                />
+              ))}
+          </div>
+        ) : (
+          <Overlay
+            ingredients={ingredients}
+            directions={directions}
+            showRecipe={showRecipe}
+            setShowRecipe={setShowRecipe}
+          />
+        )
+      } */}
+      <div className="profileRecipes">
         {recipes.length === 0
           ? <Typography variant="h6">You have no recipes saved</Typography>
           : recipes.map((recipe) => (
-            <p>{recipe.title}</p>
+            <SavedRecipeCard
+              id={recipe.id}
+              title={recipe.title}
+              author={recipe.author}
+              imageUrl={recipe.imageUrl}
+              ingredients={recipe.ingredients}
+              directions={recipe.directions}
+              onUpdate={toggleShowRecipe}
+            />
           ))}
       </div>
 

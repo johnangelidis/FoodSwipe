@@ -7,6 +7,27 @@ body {
     color: white;
 }
 
+.profileRecipes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.profileRecipesOverlay {
+    display: none;
+}
+
+.profileRecipeCard {
+    width: 350px;
+    height: 500px;
+    margin: 5px;
+}
+
+.profileRecipeCardHeader {
+    height:100px;
+}
 .recipesDiv {
     margin:auto;
 }
