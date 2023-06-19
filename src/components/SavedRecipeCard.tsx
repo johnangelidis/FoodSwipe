@@ -2,20 +2,26 @@ import React, { useState } from 'react';
 import {
   Button, Card, CardContent, CardHeader, CardMedia,
 } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import Overlay from './Overlay';
+import { RootState } from '../app/store';
+import { setShowOverlay } from '../state/overlay/overlaySlice';
 
 function SavedRecipeCard({
   id, title, author, imageUrl, ingredients, directions, onUpdate,
 }: any) {
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const overlay = useSelector((state: RootState) => state.overlay).showOverlay;
+  // console.log(overlay);
   const toggleShowRecipe = () => {
-    setShowRecipe(!showRecipe);
+    dispatch(setShowOverlay(!overlay));
     onUpdate();
   };
 
   return (
     <div>
-      {showRecipe
+      {/* {showRecipe
       && (
       <Overlay
         ingredients={ingredients}
@@ -23,7 +29,7 @@ function SavedRecipeCard({
         showRecipe={showRecipe}
         setShowRecipe={setShowRecipe}
       />
-      )}
+      )} */}
       <Card className="profileRecipeCard">
         <CardHeader
           title={title}

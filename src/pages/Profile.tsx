@@ -6,10 +6,12 @@ import { AppDispatch, RootState } from '../app/store';
 import { getMyRecipes } from '../state/recipe/recipeSlice';
 import SavedRecipeCard from '../components/SavedRecipeCard';
 import Overlay from '../components/Overlay';
+import { setShowOverlay } from '../state/overlay/overlaySlice';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
   const user = useSelector((state:RootState) => state.auth).user.result;
+  const overlay = useSelector((state: RootState) => state.overlay).showOverlay;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -27,8 +29,9 @@ function Profile() {
   }, []);
   return (
     <>
+      {overlay ? <div style={{ background: 'black', height: '100vh', opacity: '0.2' }}>.</div> : <div />}
       <div>
-        {user
+        {user && !overlay
           ? (
             <Typography variant="h3">
               {user.name}
@@ -37,33 +40,7 @@ function Profile() {
           )
           : <div />}
       </div>
-      {/* {
-        !showRecipe ? (
-          <div className="profileRecipes">
-            {recipes.length === 0
-              ? <Typography variant="h6">You have no recipes saved</Typography>
-              : recipes.map((recipe) => (
-                <SavedRecipeCard
-                  id={recipe.id}
-                  title={recipe.title}
-                  author={recipe.author}
-                  imageUrl={recipe.imageUrl}
-                  ingredients={recipe.ingredients}
-                  directions={recipe.directions}
-                  onUpdate={toggleShowRecipe}
-                />
-              ))}
-          </div>
-        ) : (
-          <Overlay
-            ingredients={ingredients}
-            directions={directions}
-            showRecipe={showRecipe}
-            setShowRecipe={setShowRecipe}
-          />
-        )
-      } */}
-      <div className="profileRecipes">
+      <div className={overlay ? 'ghost' : 'profileRecipes'}>
         {recipes.length === 0
           ? <Typography variant="h6">You have no recipes saved</Typography>
           : recipes.map((recipe) => (

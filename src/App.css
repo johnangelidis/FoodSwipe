@@ -7,6 +7,10 @@
     color: white;
 }
 
+.ghost {
+    display: none;
+}
+
 .profileRecipes {
     display: flex;
     flex-direction: row;
