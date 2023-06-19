@@ -26,13 +26,13 @@ function Recipes() {
         userId: user._id,
       };
       dispatch(getMyRecipes(data));
-      getRecipes().then((res) => {
-        const filtered = filterRecipes(res);
-        setFilteredRecipes(filtered);
-      });
     }
   }, []);
   useEffect(() => {
+    getRecipes().then((res) => {
+      const filtered = filterRecipes(res);
+      setFilteredRecipes(filtered);
+    });
     const fetchRecipes = async () => {
       const parsedRecipes = await parseRecipes(filteredRecipes);
       const res = parsedRecipes.filter((recipe) =>
@@ -44,7 +44,6 @@ function Recipes() {
       setRender(true);
     }, 3000);
   }, [filteredRecipes]);
-
   return (
     <div className="recipesDiv">
       {!render ? 'Loading...' : recipes.map((recipe) => (
