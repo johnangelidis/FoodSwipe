@@ -1,6 +1,6 @@
-body {
+/* body {
     overflow: hidden;
-}
+} */
 
 .navItem {
     text-decoration: none;
@@ -11,8 +11,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    overflow-y: scroll;
-    height: 100vh;
+    /* overflow-y: scroll; */
+    /* height: 1000vh; */
 }
 
 .profileRecipesOverlay {
@@ -26,7 +26,7 @@ body {
 }
 
 .profileRecipeCardHeader {
-    height:100px;
+    height:80px;
 }
 .recipesDiv {
     margin:auto;

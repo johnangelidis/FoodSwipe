@@ -9,7 +9,7 @@ import Overlay from '../components/Overlay';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
-  const user = useSelector((state:RootState) => state.auth).user.message;
+  const user = useSelector((state:RootState) => state.auth).user.result;
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,11 +28,14 @@ function Profile() {
   return (
     <>
       <div>
-        <Typography variant="h3">
-          {user.name}
-          &apos;s recipes
-        </Typography>
-
+        {user
+          ? (
+            <Typography variant="h3">
+              {user.name}
+              &apos;s recipes
+            </Typography>
+          )
+          : <div />}
       </div>
       {/* {
         !showRecipe ? (
