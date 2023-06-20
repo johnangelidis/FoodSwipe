@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { saveRecipe, removeRecipe, getUserRecipes } from '../../services/RecipeApiService';
+import { createSlice } from '@reduxjs/toolkit';
 import RecipeInstructions from '../../models/RecipeInstructions';
 
 interface RecipeState {

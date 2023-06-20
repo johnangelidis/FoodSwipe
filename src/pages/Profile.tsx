@@ -21,7 +21,7 @@ function Profile() {
     setShowRecipe(!showRecipe);
   };
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     const data = {
       userId: user._id,
     };
@@ -59,7 +59,6 @@ function Profile() {
           ? <Typography variant="h6">You have no recipes saved</Typography>
           : recipes.map((recipe) => (
             <SavedRecipeCard
-              id={recipe.id}
               title={recipe.title}
               author={recipe.author}
               imageUrl={recipe.imageUrl}

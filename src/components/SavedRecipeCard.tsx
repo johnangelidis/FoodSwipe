@@ -8,7 +8,7 @@ import { setShowOverlay } from '../state/overlay/overlaySlice';
 import { setSelectedRecipe } from '../state/recipe/selectedRecipeSlice';
 
 function SavedRecipeCard({
-  id, title, author, imageUrl, ingredients, directions, onUpdate,
+  title, author, imageUrl, ingredients, directions, onUpdate,
 }: any) {
   const dispatch = useDispatch();
   const overlay = useSelector((state: RootState) => state.overlay).showOverlay;
