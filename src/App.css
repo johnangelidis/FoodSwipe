@@ -1,12 +1,38 @@
-body {
+/* body {
     overflow: hidden;
-}
+} */
 
 .navItem {
     text-decoration: none;
     color: white;
 }
 
+.ghost {
+    display: none;
+}
+
+.profileRecipes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* overflow-y: scroll; */
+    /* height: 1000vh; */
+    position: relative;
+}
+
+.profileRecipesOverlay {
+    display: none;
+}
+
+.profileRecipeCard {
+    width: 350px;
+    height: 500px;
+    margin: 5px;
+}
+
+.profileRecipeCardHeader {
+    height:80px;
+}
 .recipesDiv {
     margin:auto;
 }

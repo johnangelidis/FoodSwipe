@@ -3,12 +3,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../state/auth/authSlice';
 import swipeReducer from '../state/swipe/swipeSlice';
 import recipeReducer from '../state/recipe/recipeSlice';
+import overlayReducer from '../state/overlay/overlaySlice';
+import selectedRecipeReducer from '../state/recipe/selectedRecipeSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     swipe: swipeReducer,
     recipe: recipeReducer,
+    overlay: overlayReducer,
+    selectedRecipe: selectedRecipeReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: {

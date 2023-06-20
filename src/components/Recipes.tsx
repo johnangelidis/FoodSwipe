@@ -14,25 +14,32 @@ import { getMyRecipes } from '../state/recipe/recipeSlice';
 
 function Recipes() {
   const myRecipes = useSelector((state:RootState) => state.recipe).recipes;
-  const user = useSelector((state:RootState) => state.auth).user?.message;
+  const user = useSelector((state:RootState) => state.auth).user.result;
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const dispatch = useDispatch<AppDispatch>();
 
   const [render, setRender] = useState<boolean>(false);
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, []);
+  useEffect(() => {
     if (user) {
       const data = {
         userId: user._id,
       };
       dispatch(getMyRecipes(data));
-      getRecipes().then((res) => {
-        const filtered = filterRecipes(res);
-        setFilteredRecipes(filtered);
-      });
     }
   }, []);
   useEffect(() => {
+    getRecipes().then((res) => {
+      const filtered = filterRecipes(res);
+      setFilteredRecipes(filtered);
+    });
     const fetchRecipes = async () => {
       const parsedRecipes = await parseRecipes(filteredRecipes);
       const res = parsedRecipes.filter((recipe) =>
@@ -44,7 +51,6 @@ function Recipes() {
       setRender(true);
     }, 3000);
   }, [filteredRecipes]);
-
   return (
     <div className="recipesDiv">
       {!render ? 'Loading...' : recipes.map((recipe) => (
