@@ -14,12 +14,19 @@ import { getMyRecipes } from '../state/recipe/recipeSlice';
 
 function Recipes() {
   const myRecipes = useSelector((state:RootState) => state.recipe).recipes;
-  const user = useSelector((state:RootState) => state.auth).user?.message;
+  const user = useSelector((state:RootState) => state.auth).user.result;
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const dispatch = useDispatch<AppDispatch>();
 
   const [render, setRender] = useState<boolean>(false);
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, []);
   useEffect(() => {
     if (user) {
       const data = {
