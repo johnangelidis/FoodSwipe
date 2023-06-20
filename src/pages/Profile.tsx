@@ -5,13 +5,13 @@ import { Typography } from '@mui/material';
 import { AppDispatch, RootState } from '../app/store';
 import { getMyRecipes } from '../state/recipe/recipeSlice';
 import SavedRecipeCard from '../components/SavedRecipeCard';
-import Overlay from '../components/Overlay';
-import { setShowOverlay } from '../state/overlay/overlaySlice';
+import SelectedRecipeOverlay from '../components/SelectedRecipeOverlay';
 
 function Profile() {
   const { recipes } = useSelector((state:RootState) => state.recipe);
   const user = useSelector((state:RootState) => state.auth).user.result;
   const overlay = useSelector((state: RootState) => state.overlay).showOverlay;
+  const { selectedRecipe } = useSelector((state: RootState) => state.selectedRecipe);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -27,9 +27,23 @@ function Profile() {
     };
     dispatch(getMyRecipes(data));
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = overlay ? 'hidden' : 'visible';
+
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, [overlay]);
   return (
     <>
-      {overlay ? <div style={{ background: 'black', height: '100vh', opacity: '0.2' }}>.</div> : <div />}
+      {overlay
+        ? (
+          <SelectedRecipeOverlay
+            ingredients={selectedRecipe.ingredients}
+            directions={selectedRecipe.directions}
+          />
+        )
+        : <div />}
       <div>
         {user && !overlay
           ? (

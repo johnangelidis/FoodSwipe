@@ -10,9 +10,12 @@ const overlaySlice = createSlice({
     setShowOverlay: (state: any, action) => {
       state.showOverlay = action.payload;
     },
+    resetOverlay: (state:any) => {
+      state.showOverlay = false;
+    },
   },
 });
 
-export const { setShowOverlay } = overlaySlice.actions;
+export const { setShowOverlay, resetOverlay } = overlaySlice.actions;
 
 export default overlaySlice.reducer;
