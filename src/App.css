@@ -1,7 +1,9 @@
-/* body {
-    overflow: hidden;
-} */
-
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 .navItem {
     text-decoration: none;
     color: white;
