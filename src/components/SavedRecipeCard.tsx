@@ -32,7 +32,6 @@ function SavedRecipeCard({
       userId: user._id,
       id,
     };
-    console.log(data);
     dispatch(deleteRecipe(data));
   };
 

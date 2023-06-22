@@ -100,9 +100,7 @@ export const recipeSlice = createSlice({
       .addCase(deleteRecipe.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.recipes = state.recipes.filter(
-          (recipe) => recipe.id !== action.payload.data.id,
-        );
+        state.recipes = action.payload.data;
       })
       .addCase(deleteRecipe.rejected, (state) => {
         state.isLoading = false;
