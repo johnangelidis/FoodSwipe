@@ -20,7 +20,7 @@ function RecipeCard({
 } : Recipe) {
   const dispatch = useDispatch<AppDispatch>();
   const isSwipeable = useSelector((state:RootState) => state.swipe.isSwipeable);
-  const user = useSelector((state: RootState) => state.auth).user.message;
+  const user = useSelector((state: RootState) => state.auth).user.result;
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
   const toggleShowRecipe = () => {
     setShowRecipe(!showRecipe);
