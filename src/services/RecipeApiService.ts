@@ -17,7 +17,7 @@ const saveRecipe = async (data: any) => {
 };
 
 const removeRecipe = async (data: any) => {
-  const response = await axios.delete(REACT_APP_REMOVE_RECIPE_API, data);
+  const response = await axios.post(REACT_APP_REMOVE_RECIPE_API, data);
   return response;
 };
 
