@@ -65,7 +65,7 @@ function RecipeCard({
             image={imageUrl}
             title="img"
           />
-          <CardContent className="recipeCardButtons">
+          <CardContent className="recipeCardButton">
             <Button variant="text" onClick={toggleShowRecipe}>View recipe</Button>
           </CardContent>
         </Card>
