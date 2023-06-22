@@ -4,6 +4,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Box, CircularProgress } from '@mui/material';
 import Recipe from '../models/Recipe';
 import RecipeCard from './RecipeCard';
 import {
@@ -53,7 +54,15 @@ function Recipes() {
   }, [filteredRecipes]);
   return (
     <div className="recipesDiv">
-      {!render ? 'Loading...' : recipes.map((recipe) => (
+      {!render ? (
+        <div className="spinner">
+          <div>
+            <Box>
+              <CircularProgress />
+            </Box>
+          </div>
+        </div>
+      ) : recipes.map((recipe) => (
         <RecipeCard {...recipe} key={recipe.id} />
       ))}
     </div>
