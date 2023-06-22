@@ -12,6 +12,7 @@
 }
 
 .profileRecipes {
+    padding: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -35,6 +36,7 @@
 }
 .recipesDiv {
     margin:auto;
+    padding: 10px;
 }
 
 .recipeCardContainer {
@@ -55,6 +57,12 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+}
+
+.recipeCardButton {
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .overlay-bg {
